@@ -1,6 +1,6 @@
-# BCRAE
+# Breast Cancer Residual Autoencoder (BCRAE)
 
-This repository contains python residual and transposed residual blocks to build Autoencoders (RAE-18 and RAE-50)
+This repository contains python residual and transposed residual blocks to build Autoencoders (RAE-18 and RAE-50) for breast cancer histopathological image task.
 
 
 Reference:
