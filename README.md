@@ -1,6 +1,6 @@
 # BCRAE
 
-This repository contains python classes to build RAE-18 and RAE-50
+This repository contains python residual and transposed residual blocks to build Autoencoders (RAE-18 and RAE-50)
 
 
 Reference:
