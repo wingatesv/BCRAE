@@ -7,6 +7,9 @@ Reference:
 https://machinelearningknowledge.ai/keras-implementation-of-resnet-50-architecture-from-scratch/
 https://github.com/liao2000/ML-Notebook/blob/main/ResNet/ResNet_TensorFlow.ipynb
 
+If you find this repository helpful, please cite:
+Voon, W.(2022), BCRAE. https://github.com/wingatesv/BCRAE.git (accessed date).
+
 
 # Steps to use this repository
 
