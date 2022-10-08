@@ -2,7 +2,6 @@
 import tensorflow as tf
 import keras
 
-keras.layers.BatchNormalization._USE_V2_BEHAVIOR = False
 
 # Residual Block for Resnet18 and RAE18 models
 class ResBlock(keras.Model):
