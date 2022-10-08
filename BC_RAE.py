@@ -1,7 +1,8 @@
+# Import Libraries
 import tensorflow as tf
 import keras
 
-
+# Residual Block for Resnet18 and RAE18 models
 class ResBlock(keras.Model):
   def __init__(self, filters, downsample):
     super().__init__()
@@ -33,7 +34,8 @@ class ResBlock(keras.Model):
   def get_config(self):
     return super().get_config()
 
-
+  
+# Transposed Residual Block for RAE18
 class TransResBlock(keras.Model):
   def __init__(self, filters, upsample):
     super().__init__()
@@ -65,6 +67,7 @@ class TransResBlock(keras.Model):
   def get_config(self):
     return super().get_config()
 
+# RAE18
 class RAE18(keras.Model):
     def __init__(self):
         super().__init__()
@@ -145,8 +148,7 @@ class RAE18(keras.Model):
       
       
       
-      
-      
+# Bigger Residual Block for Resnet50 and RAE50
 class SuperResBlock(keras.Model):
   def __init__(self, filters, stride, downsample):
     super().__init__()
@@ -182,7 +184,9 @@ class SuperResBlock(keras.Model):
   
   def get_config(self):
     return super().get_config()
-    
+
+  
+# Bigger Transposed Residual Block for RAE50
 class SuperTransResBlock(keras.Model):
   def __init__(self, filters, stride, upsample):
     super().__init__()
@@ -219,6 +223,7 @@ class SuperTransResBlock(keras.Model):
   def get_config(self):
     return super().get_config()
 
+# RAE50
 class RAE50(keras.Model):
     def __init__(self):
         super().__init__()
@@ -316,8 +321,7 @@ class RAE50(keras.Model):
       
       
       
-      
-      
+# Another version of bigger residual block           
 class ResBottleneckBlock(keras.Model):
     def __init__(self, filters, downsample):
         super().__init__()
@@ -358,6 +362,7 @@ class ResBottleneckBlock(keras.Model):
         input = input + shortcut
         return keras.layers.ReLU()(input)
 
+# Another version of transposed residual block
 class TransResBottleneckBlock(keras.Model):
     def __init__(self, filters, upsample):
         super().__init__()
@@ -398,6 +403,8 @@ class TransResBottleneckBlock(keras.Model):
         input = input + shortcut
         return keras.layers.ReLU()(input)
 
+      
+#  Another version of RAE50
 class RAE50v2(keras.Model):
     def __init__(self):
         super().__init__()
@@ -491,3 +498,112 @@ class RAE50v2(keras.Model):
     def model(self, input_shape, name):
       x = keras.Input(input_shape)
       return keras.models.Model(x, self.call(x), name=name)
+    
+    
+# Standard Resnet18
+class Resnet18(keras.Model):
+  def __init__(self, outputs=1):
+    super().__init__()
+    self.layer0 = keras.Sequential([
+      keras.layers.Conv2D(64, 7, 2, padding='same'),
+      keras.layers.BatchNormalization(),
+      keras.layers.ReLU(),
+      keras.layers.MaxPool2D(pool_size=3, strides=2, padding='same')
+        ], name='layer0')
+
+    self.layer1 = keras.Sequential([
+      ResBlock(64, downsample=False),
+      ResBlock(64, downsample=False)
+        ], name='layer1')
+
+    self.layer2 = keras.Sequential([
+      ResBlock(128, downsample=True),
+      ResBlock(128, downsample=False)
+        ], name='layer2')
+
+    self.layer3 = keras.Sequential([
+      ResBlock(256, downsample=True),
+      ResBlock(256, downsample=False)
+        ], name='layer3')
+
+    self.layer4 = keras.Sequential([
+            ResBlock(512, downsample=True),
+            ResBlock(512, downsample=False)
+        ], name='layer4')
+
+    self.gap = keras.layers.GlobalAveragePooling2D()
+    self.fc = keras.layers.Dense(outputs)
+
+  def call(self, input):
+        input = self.layer0(input)
+        input = self.layer1(input)
+        input = self.layer2(input)
+        input = self.layer3(input)
+        input = self.layer4(input)
+        input = self.gap(input)
+        input = self.fc(input)
+
+        return input
+
+  def model(self, input_shape, name):
+      x = keras.Input(input_shape)
+      return keras.models.Model(x, self.call(x), name=name)
+  
+  
+# Standard Resnet50
+class Resnet50(keras.Model):
+  def __init__(self, outputs=1):
+    super().__init__()
+    self.layer0 = keras.Sequential([
+      keras.layers.Conv2D(64, 7, 2, padding='same'),
+      keras.layers.BatchNormalization(),
+      keras.layers.ReLU(),
+      keras.layers.MaxPool2D(pool_size=3, strides=2, padding='same'),
+        ], name='layer0')
+
+    self.layer1 = keras.Sequential([
+      ResBottleneckBlock(64, downsample=False),
+      ResBottleneckBlock(64, downsample=False),
+      ResBottleneckBlock(64, downsample=False)
+        ], name='layer1')
+
+    self.layer2 = keras.Sequential([
+      ResBottleneckBlock(128, downsample=True),
+      ResBottleneckBlock(128, downsample=False),
+      ResBottleneckBlock(128, downsample=False),
+      ResBottleneckBlock(128, downsample=False)
+        ], name='layer2')
+
+    self.layer3 = keras.Sequential([
+      ResBottleneckBlock(256, downsample=True),
+      ResBottleneckBlock(256, downsample=False),
+      ResBottleneckBlock(256, downsample=False),
+      ResBottleneckBlock(256, downsample=False),
+      ResBottleneckBlock(256, downsample=False),
+      ResBottleneckBlock(256, downsample=False)
+        ], name='layer3')
+
+    self.layer4 = keras.Sequential([
+            ResBottleneckBlock(512, downsample=True),
+            ResBottleneckBlock(512, downsample=False),
+            ResBottleneckBlock(512, downsample=False)
+        ], name='layer4')
+
+    self.gap = keras.layers.GlobalAveragePooling2D()
+    self.fc = keras.layers.Dense(outputs)
+
+  def call(self, input):
+        input = self.layer0(input)
+        input = self.layer1(input)
+        input = self.layer2(input)
+        input = self.layer3(input)
+        input = self.layer4(input)
+        input = self.gap(input)
+        input = self.fc(input)
+
+        return input
+
+  def model(self, input_shape, name):
+      x = keras.Input(input_shape)
+      return keras.models.Model(x, self.call(x), name=name)
+    
