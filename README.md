@@ -1,6 +1,13 @@
 # Breast Cancer Residual Autoencoder (BCRAE)
 
-This repository contains python residual and transposed residual blocks to build Autoencoders (RAE-18 and RAE-50) for breast cancer histopathological image task.
+This repository contains python keras implementation of residual and transposed residual blocks for *Autoencoders* in breast cancer histopathological image task.
+
+This repository contains:
+1.  *RAE18*
+2.  *RAE50*
+3.  *RAE50v2*
+4.  *Resnet18*
+5.  *Resnet50*
 
 # Acknowledgement
 I would like to thank Kashiwa[@liao2000](https://liao2000.github.io/) for the residual block guidance and tutorial.
@@ -14,6 +21,7 @@ https://towardsdev.com/implement-resnet-with-tensorflow2-4ee81e33a1ac
 https://github.com/liao2000/ML-Notebook/blob/main/ResNet/ResNet_TensorFlow.ipynb
 
 If you find this repository helpful, please cite:
+
 Voon, W.(2022), BCRAE. https://github.com/wingatesv/BCRAE.git (accessed date).
 
 
