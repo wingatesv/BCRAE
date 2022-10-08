@@ -10,7 +10,7 @@ class ResBlock(keras.Model):
       self.conv1 = keras.layers.Conv2D(filters, 3, 2, padding='same')
       self.shortcut = keras.Sequential([
                 keras.layers.Conv2D(filters, 1, 2),
-                keras.layers.BatchNormalization()])
+                keras.layers.BatchNormalization(axis=3)])
     else:
       self.conv1 = keras.layers.Conv2D(filters, 3, 1, padding='same')
       self.shortcut = keras.Sequential()
@@ -21,11 +21,11 @@ class ResBlock(keras.Model):
     shortcut = self.shortcut(input)
 
     input = self.conv1(input)
-    input = keras.layers.BatchNormalization()(input)
+    input = keras.layers.BatchNormalization(axis=3)(input)
     input = keras.layers.ReLU()(input)
 
     input = self.conv2(input)
-    input = keras.layers.BatchNormalization()(input)
+    input = keras.layers.BatchNormalization(axis=3)(input)
     input = keras.layers.ReLU()(input)
 
     input = input + shortcut
@@ -43,7 +43,7 @@ class TransResBlock(keras.Model):
       self.conv1 = keras.layers.Conv2DTranspose(filters, 3, 2, padding='same')
       self.shortcut = keras.Sequential([
                 keras.layers.Conv2DTranspose(filters, 1, 2),
-                keras.layers.BatchNormalization()])
+                keras.layers.BatchNormalization(axis=3)])
     else:
       self.conv1 = keras.layers.Conv2DTranspose(filters, 3, 1, padding='same')
       self.shortcut = keras.Sequential()
@@ -54,11 +54,11 @@ class TransResBlock(keras.Model):
     shortcut = self.shortcut(input)
 
     input = self.conv1(input)
-    input = keras.layers.BatchNormalization()(input)
+    input = keras.layers.BatchNormalization(axis=3)(input)
     input = keras.layers.ReLU()(input)
 
     input = self.conv2(input)
-    input = keras.layers.BatchNormalization()(input)
+    input = keras.layers.BatchNormalization(axis=3)(input)
     input = keras.layers.ReLU()(input)
 
     input = input + shortcut
@@ -73,7 +73,7 @@ class RAE18(keras.Model):
         super().__init__()
         self.layer0 = keras.Sequential([
             keras.layers.Conv2D(64, 7, 2, padding='same'),
-            keras.layers.BatchNormalization(),
+            keras.layers.BatchNormalization(axis=3),
             keras.layers.ReLU(),
             keras.layers.MaxPool2D(pool_size=3, strides=1, padding='same')
             ], name='layer0')
@@ -121,7 +121,7 @@ class RAE18(keras.Model):
 
         self.layer9 = keras.Sequential([
             keras.layers.Conv2DTranspose(64, 7, 2, padding='same'),
-            keras.layers.BatchNormalization(),
+            keras.layers.BatchNormalization(axis=3),
             keras.layers.ReLU()
             ], name='layer9')
         
