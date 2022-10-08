@@ -2,6 +2,9 @@
 
 This repository contains python residual and transposed residual blocks to build Autoencoders (RAE-18 and RAE-50) for breast cancer histopathological image task.
 
+# Acknowledgement
+I would like to thank Kashiwa[@liao2000](https://liao2000.github.io/) for the residual block guidance and tutorial.
+
 
 # Reference:
 https://machinelearningknowledge.ai/keras-implementation-of-resnet-50-architecture-from-scratch/
