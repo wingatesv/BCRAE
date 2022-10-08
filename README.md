@@ -10,7 +10,7 @@ This repository contains:
 5.  *Resnet50*
 
 # Acknowledgement
-I would like to thank Kashiwa[@liao2000](https://liao2000.github.io/) for the residual block guidance and tutorial.
+I would like to thank Kashiwa([@liao2000](https://liao2000.github.io/)) for the residual block guidance and tutorial.
 
 
 # Reference:
